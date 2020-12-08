@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentActivity;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -20,6 +22,7 @@ public class MapsActivity extends AppCompatActivity implements GoogleMap.OnMarke
 
     private GoogleMap mMap;
     private Marker markerDrag;
+    private Button btn_hibrido, btn_Marcador;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,9 +32,29 @@ public class MapsActivity extends AppCompatActivity implements GoogleMap.OnMarke
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+        btn_hibrido = (Button) findViewById(R.id.btnhibrido);
+        btn_Marcador = (Button) findViewById(R.id.btnMarcador) ;
+
+        btn_Marcador.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onMapReady(mMap);
+                //insertarMarcador();
+            }
+        });
 
     }
 
+
+    /** private void insertarMarcador() {
+        Mmap.addMarker(new MarkerOptions()
+                .position(new LatLng(40.3936945, -3.701519))
+                .title("Pais: España"));
+    }}*/
+
+    /**public void Cambiarhibrido (View view){
+        mMap.setMapStyle(GoogleMap.MAP_TYPE_HYBRID);
+    }*/
     /**
      * Manipulates the map once available.
      * This callback is triggered when the map is ready to be used.
