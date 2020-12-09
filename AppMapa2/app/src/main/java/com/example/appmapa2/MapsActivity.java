@@ -77,7 +77,7 @@ public class MapsActivity extends AppCompatActivity implements GoogleMap.OnMarke
         // mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
         // Add a marker in Sydney, Australia,
         // and move the map's camera to the same location.
-        final LatLng tibas = new LatLng(-9.957626, -84.075182);
+        final LatLng tibas = new LatLng(9.957626, -84.075182);
         markerDrag = googleMap.addMarker(
                 new MarkerOptions()
                         .position(tibas)
