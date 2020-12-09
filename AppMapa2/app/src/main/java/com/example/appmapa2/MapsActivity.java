@@ -1,8 +1,11 @@
 package com.example.appmapa2;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.FragmentActivity;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -17,6 +20,7 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.Locale;
+
 //Para quitar coordenadas al hacer drga al marker, se pone extends FragmentActivity, en lugar de AppCompatActivity
 public class MapsActivity extends AppCompatActivity implements GoogleMap.OnMarkerDragListener, OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
 
@@ -33,7 +37,7 @@ public class MapsActivity extends AppCompatActivity implements GoogleMap.OnMarke
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
         btn_hibrido = (Button) findViewById(R.id.btnhibrido);
-        btn_Marcador = (Button) findViewById(R.id.btnMarcador) ;
+        btn_Marcador = (Button) findViewById(R.id.btnMarcador);
 
         btn_Marcador.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -47,14 +51,14 @@ public class MapsActivity extends AppCompatActivity implements GoogleMap.OnMarke
 
 
     /** private void insertarMarcador() {
-        Mmap.addMarker(new MarkerOptions()
-                .position(new LatLng(40.3936945, -3.701519))
-                .title("Pais: España"));
-    }}*/
+     Mmap.addMarker(new MarkerOptions()
+     .position(new LatLng(40.3936945, -3.701519))
+     .title("Pais: España"));
+     }}*/
 
     /**public void Cambiarhibrido (View view){
-        mMap.setMapStyle(GoogleMap.MAP_TYPE_HYBRID);
-    }*/
+     mMap.setMapStyle(GoogleMap.MAP_TYPE_HYBRID);
+     }*/
     /**
      * Manipulates the map once available.
      * This callback is triggered when the map is ready to be used.
@@ -71,7 +75,7 @@ public class MapsActivity extends AppCompatActivity implements GoogleMap.OnMarke
         // Add a marker in Sydney and move the camera
         //LatLng sydney = new LatLng(-34, 151);
         //mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-       // mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        // mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
         // Add a marker in Sydney, Australia,
         // and move the map's camera to the same location.
         final LatLng tibas = new LatLng(-9.957626, -84.075182);
@@ -81,6 +85,24 @@ public class MapsActivity extends AppCompatActivity implements GoogleMap.OnMarke
                         //Importante activar para rastrear
                         .draggable(true));
         googleMap.moveCamera(CameraUpdateFactory.newLatLng(tibas));
+        //Opciones de zoom
+        googleMap.getUiSettings().setZoomControlsEnabled(true);
+        //Localizacion actual, primero se agregan permisos y luego se agrega opcion de localizacion
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+        googleMap.setMyLocationEnabled(true);
+        //Se puede quitar esta opcion para activar el boton de gps, caso contrario, se habilita solo
+        //Fuente: https://www.youtube.com/watch?v=a3JXG3hWMIc
+        googleMap.getUiSettings().setMyLocationButtonEnabled(false);
+
         //Importante activar
         googleMap.setOnMarkerClickListener(this);
         googleMap.setOnMarkerDragListener(this);
