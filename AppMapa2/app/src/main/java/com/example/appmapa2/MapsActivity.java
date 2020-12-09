@@ -71,7 +71,6 @@ public class MapsActivity extends AppCompatActivity implements GoogleMap.OnMarke
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-
         // Add a marker in Sydney and move the camera
         //LatLng sydney = new LatLng(-34, 151);
         //mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
@@ -87,6 +86,11 @@ public class MapsActivity extends AppCompatActivity implements GoogleMap.OnMarke
         googleMap.moveCamera(CameraUpdateFactory.newLatLng(tibas));
         //Opciones de zoom
         googleMap.getUiSettings().setZoomControlsEnabled(true);
+
+        //Importante activar, para poder arrastrar y posicionar
+        googleMap.setOnMarkerClickListener(this);
+        googleMap.setOnMarkerDragListener(this);
+
         //Localizacion actual, primero se agregan permisos y luego se agrega opcion de localizacion
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
@@ -102,10 +106,6 @@ public class MapsActivity extends AppCompatActivity implements GoogleMap.OnMarke
         //Se puede quitar esta opcion para activar el boton de gps, caso contrario, se habilita solo
         //Fuente: https://www.youtube.com/watch?v=a3JXG3hWMIc
         googleMap.getUiSettings().setMyLocationButtonEnabled(false);
-
-        //Importante activar
-        googleMap.setOnMarkerClickListener(this);
-        googleMap.setOnMarkerDragListener(this);
         /**LatLng sydney = new LatLng(-33.852, 151.211);
         googleMap.addMarker(new MarkerOptions()
                 .position(sydney)
