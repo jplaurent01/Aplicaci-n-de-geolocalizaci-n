@@ -1,4 +1,3 @@
-
 # Proyecto 3: Aplicación de geolocalización
 
 Integrantes: 
