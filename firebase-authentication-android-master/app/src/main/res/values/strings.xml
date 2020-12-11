@@ -15,4 +15,5 @@
     <string name="edit_message">Enter a message</string>
     <string name="button_send">Send</string>
     <string name="move_marker">Move marker</string>
+    <string name="write">write</string>
 </resources>

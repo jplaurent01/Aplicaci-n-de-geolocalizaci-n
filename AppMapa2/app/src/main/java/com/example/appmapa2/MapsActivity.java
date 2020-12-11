@@ -19,6 +19,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.util.ArrayList;
 import java.util.Locale;
 
 //Para quitar coordenadas al hacer drga al marker, se pone extends FragmentActivity, en lugar de AppCompatActivity
@@ -27,6 +28,7 @@ public class MapsActivity extends AppCompatActivity implements GoogleMap.OnMarke
     private GoogleMap mMap;
     private Marker markerDrag;
     private Button btn_hibrido, btn_Marcador;
+    ArrayList<Marker> listadoMar = new ArrayList<Marker>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +48,14 @@ public class MapsActivity extends AppCompatActivity implements GoogleMap.OnMarke
                 //insertarMarcador();
             }
         });
+
+        btn_hibrido.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mMap.clear();
+            }
+        });
+
 
     }
 
@@ -78,11 +88,12 @@ public class MapsActivity extends AppCompatActivity implements GoogleMap.OnMarke
         // Add a marker in Sydney, Australia,
         // and move the map's camera to the same location.
         final LatLng tibas = new LatLng(9.957626, -84.075182);
-        markerDrag = googleMap.addMarker(
-                new MarkerOptions()
+        markerDrag = googleMap.addMarker(new MarkerOptions()
                         .position(tibas)
                         //Importante activar para rastrear
                         .draggable(true));
+        //añadimos el marcador a la lista
+        listadoMar.add(markerDrag);
         googleMap.moveCamera(CameraUpdateFactory.newLatLng(tibas));
         //Opciones de zoom
         googleMap.getUiSettings().setZoomControlsEnabled(true);
@@ -139,8 +150,28 @@ public class MapsActivity extends AppCompatActivity implements GoogleMap.OnMarke
         }
     }
 
+
     @Override
     public boolean onMarkerClick(Marker marker) {
         return false;
     }
+
+    //@Override
+    //public void onClickDelete(GoogleMap googleMap) {
+//Cuando vayas a eliminar si tenemos el id del marker a borrar recorremos la lista y eliminamos este marcador
+        //for(int i = 0; i<listadoMar.size; i++)
+        //{
+          //  if(listadoMar.get(i).getId()==id){ //Comparamos los id de los marcadores de la lista con el del marker que queremos eliminar
+            //    listadoMar.remove(listadoMar.get(i));
+            //}
+        //}
+        //Ahora que hemos eliminado el marcador, recargamos el mapa
+        //mMap.clear();  //Primero eliminamos lo que había en el mapa
+
+        for(int i = 0; i<listadoMar.size; i++)  //Añadimos todos los marcadores otra vez
+        {
+            mMap.addMarker(listadoMar.getID(i));
+        }
+    //}
+
 }
